@@ -8,7 +8,36 @@
  * - subtraction (-)
  * - multiplication (*)
  * - division (/)
+ * - modulo (%)
+ * - exponentiation (^ or **)
  */
+
+function modulo(a, b) {
+  if (Number.isNaN(a) || Number.isNaN(b)) {
+    throw new Error("Both operands must be valid numbers.");
+  }
+  if (b === 0) {
+    throw new Error("Modulo by zero is not allowed.");
+  }
+  return a % b;
+}
+
+function power(base, exponent) {
+  if (Number.isNaN(base) || Number.isNaN(exponent)) {
+    throw new Error("Both operands must be valid numbers.");
+  }
+  return base ** exponent;
+}
+
+function squareRoot(n) {
+  if (Number.isNaN(n)) {
+    throw new Error("Operand must be a valid number.");
+  }
+  if (n < 0) {
+    throw new Error("Square root of a negative number is not allowed.");
+  }
+  return Math.sqrt(n);
+}
 
 function calculate(left, operator, right) {
   if (Number.isNaN(left) || Number.isNaN(right)) {
@@ -27,8 +56,13 @@ function calculate(left, operator, right) {
         throw new Error("Division by zero is not allowed.");
       }
       return left / right;
+    case "%":
+      return modulo(left, right);
+    case "^":
+    case "**":
+      return power(left, right);
     default:
-      throw new Error("Unsupported operator. Use one of +, -, *, /.");
+      throw new Error("Unsupported operator. Use one of +, -, *, /, %, ^, **.");
   }
 }
 
@@ -58,4 +92,4 @@ if (require.main === module) {
   runCli();
 }
 
-module.exports = { calculate };
+module.exports = { calculate, modulo, power, squareRoot };
